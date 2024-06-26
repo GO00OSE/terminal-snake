@@ -37,9 +37,9 @@ void newapple() {
 }
 
 void drawscr(int player_pos[], int apple_pos[]){
-  char bg[] = "\x1b[1;37m󰝣";
-  char snake[] = "\x1b[1;37m󰝤";
-  char apple[] = "\x1b[1;31m ";
+  char bg[] = "\x1b[1;37m[ ]";
+  char snake[] = "\x1b[1;32m[x]";
+  char apple[] = "\x1b[1;31m[o]";
 
   for(int y = 0; y <= gridH - 1; y++){
     for(int x = 0; x <= gridH - 1; x++){
@@ -55,7 +55,7 @@ void drawscr(int player_pos[], int apple_pos[]){
     }
     printf("\n");  
   }
-  printf("        \x1b[1;32m %d \x1b[1;37m \n", tail_len); 
+  printf("             \x1b[1;32m %d \x1b[1;37m \n", tail_len); 
 }
 
 int main() {
@@ -70,7 +70,8 @@ int main() {
   int currdir = 0;
   char ch;
         //󰝤 󰝤 󰝤 󰝤 󰝤 󰝤 󰝤 󰝤 󰝤 󰝤
-  printf("     \x1b[1;32m󱔎 Snake 󱔎 \x1b[1;37m\n");
+        //            [1][2][3][4][5][6][7][8][9][10]
+  printf("\x1b[1;32m           - Snake - \x1b[1;37m\n");
 
   while(1){
     if(_kbhit()){
@@ -91,7 +92,7 @@ int main() {
     cur_time = clock();
     time_passed = ((double)(cur_time - start_time)) / CLOCKS_PER_SEC * 1000;
 
-    if(time_passed >= 250){
+    if(time_passed >= 150){ //default: 250
       currdir = newdir;
       if(currdir == 0)
         player_pos[0]++;
@@ -146,5 +147,5 @@ gameover:
     printf("\x1b[2K"); // Clear entire line
   }
   printf("\x1b[?25h");
-  printf("\x1b[5m\x1b[1;31m     GAMEOVER \x1b[25m \n  \x1b[1;32m    Score: %d \x1b[1;37m \n", tail_len);
+  printf("\x1b[5m\x1b[1;31m          [GAMEOVER] \x1b[25m \n  \x1b[1;32m         Score: %d \x1b[1;37m \n", tail_len);
 }
